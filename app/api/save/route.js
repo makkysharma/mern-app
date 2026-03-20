@@ -1,14 +1,24 @@
-export const runtime = "nodejs";
-
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Prompt from "@/models/Prompt";
 
 export async function POST(req) {
   try {
+    console.log("API HIT");
+
     await connectDB();
 
-    const { prompt, response } = await req.json();
+    const body = await req.json();
+    console.log("BODY:", body);
+
+    const { prompt, response } = body;
+
+    if (!prompt || !response) {
+      return NextResponse.json(
+        { error: "Missing prompt or response" },
+        { status: 400 }
+      );
+    }
 
     const savedData = await Prompt.create({ prompt, response });
 
@@ -17,8 +27,10 @@ export async function POST(req) {
       data: savedData,
     });
   } catch (error) {
+    console.error("ERROR 👉", error); // THIS WILL SHOW REAL ISSUE
+
     return NextResponse.json(
-      { error: "Failed to save data" },
+      { error: error.message },
       { status: 500 }
     );
   }

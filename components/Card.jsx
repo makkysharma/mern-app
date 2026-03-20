@@ -8,22 +8,35 @@ const Card = () => {
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleRun = async () => {
+    const handleRun = async () => {
     try {
-      setLoading(true);
-      const res = await getAIResponse(prompt);
-      setResponse(res.response);
-    } catch (err) {
-      alert("Error");
-    } finally {
-      setLoading(false);
-    }
-  };
+        setLoading(true);
 
-  const handleSave = async () => {};
+        const res = await askAI(prompt);
+
+        setResponse(res.response);
+    } catch (err) {
+        alert("Error");
+    } finally {
+        setLoading(false);
+    }
+    };
+
+    const handleSave = async () => {
+    try {
+        await savePrompt({
+        prompt,
+        response,
+        });
+
+        alert("Saved successfully.");
+    } catch (err) {
+        alert("Save failed.");
+    }
+    };
   return (
     <>
-          <div className="w-full max-w-lg flex flex-col gap-5 rounded-2xl p-6 bg-slate-800/70 border border-slate-700/60 shadow-2xl shadow-black/40 backdrop-blur-sm">
+          <div className="w-full max-w-2xl flex flex-col gap-5 rounded-2xl p-6 bg-slate-800/70 border border-slate-700/60 shadow-2xl shadow-black/40 backdrop-blur-sm">
 
         {/* Prompt Textarea */}
         <div className="flex flex-col gap-1.5">
@@ -45,7 +58,7 @@ const Card = () => {
           <button
             onClick={handleRun}
             disabled={loading || !prompt.trim()}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white bg-violet-600 hover:bg-violet-500 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-violet-900/40 hover:shadow-violet-800/50 transition-all duration-150"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white bg-violet-600 hover:bg-violet-500 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-violet-900/40 hover:shadow-violet-800/50 transition-all duration-150 cursor-pointer"
           >
             {loading ? (
               <>
@@ -71,7 +84,7 @@ const Card = () => {
             Response
           </label>
           <div
-            className={`w-full p-4 rounded-xl min-h-[110px] text-sm border transition-all duration-200 ${
+            className={`w-full p-4 rounded-xl min-h-[110px] max-h-82 overflow-auto text-sm border transition-all duration-200 custom-scrollbar ${
               response
                 ? "bg-slate-900/70 border-slate-700 text-slate-200"
                 : "bg-slate-900/40 border-slate-700/50 text-slate-500 italic"
@@ -86,7 +99,7 @@ const Card = () => {
           <button
             onClick={handleSave}
             disabled={!response}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white bg-slate-700 hover:bg-slate-600 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed border border-slate-600/50 hover:border-slate-500/60 shadow-md transition-all duration-150"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white bg-slate-700 hover:bg-slate-600 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed border border-slate-600/50 hover:border-slate-500/60 shadow-md transition-all duration-150 cursor-pointer"
           >
             <Database className="w-4 h-4" />
             Save
