@@ -6,10 +6,10 @@ import Prompt from "@/models/Prompt";
 
 export async function GET(req) {
   try {
-    // Connect to DB
+    // Connecting to DB
     await connectDB();
 
-    // Fetch latest 15 prompts sorted by creation time
+    // Fetching latest 15 prompts sorted by creation time
     const latestPrompts = await Prompt.find({})
       .sort({ createdAt: -1 }) // descending order
       .limit(15);

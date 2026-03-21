@@ -4,8 +4,6 @@ import Prompt from "@/models/Prompt";
 
 export async function POST(req) {
   try {
-    console.log("API HIT");
-
     await connectDB();
 
     const body = await req.json();
@@ -27,7 +25,7 @@ export async function POST(req) {
       data: savedData,
     });
   } catch (error) {
-    console.error("ERROR 👉", error); // THIS WILL SHOW REAL ISSUE
+    console.error("error: ", error);
 
     return NextResponse.json(
       { error: error.message },
