@@ -4,7 +4,7 @@ import { Sparkles, ExternalLink } from 'lucide-react'
 const Footer = () => {
   return (
     <>
-    <p className="text-xs text-slate-400 flex items-center gap-1 mt-6 text-center justify-center">
+    <p className="text-xs text-slate-400 flex items-center gap-1 mt-6 text-center justify-center ml-[320px]">
         Made with <Sparkles className="w-3 h-3 text-violet-400" /> by{" "}
         <a
           className="text-violet-400 hover:text-violet-300 hover:underline inline-flex items-center gap-0.5 transition-colors duration-150"

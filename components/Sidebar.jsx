@@ -7,7 +7,7 @@ import { Plus } from 'lucide-react';
 const Sidebar = ({ prompts, setPrompt, setMessages }) => {
 
   return (
-    <div className='fixed top-0 left-0 h-full w-64 p-4 overflow-y-auto border-r border-slate-700/60 bg-slate-900 gap-1.5'>
+    <div className='fixed top-0 left-0 h-full w-[320px] p-4 overflow-y-auto border-r border-slate-700/60 bg-slate-900 gap-1.5'>
       
       <div className="flex justify-end">
         <button

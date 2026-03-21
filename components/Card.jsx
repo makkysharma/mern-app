@@ -4,6 +4,7 @@ import { askAI, savePrompt } from "@/lib/api";
 
 const Card = ({ prompt, setPrompt, setPrompts, messages, setMessages }) => {
   const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   const handleRun = async () => {
     if (!prompt.trim()) return;
@@ -38,6 +39,7 @@ const Card = ({ prompt, setPrompt, setPrompts, messages, setMessages }) => {
 
   const handleSave = async () => {
     try {
+      setSaving(true)
       const last = messages[messages.length - 1];
       const prev = messages[messages.length - 2];
 
@@ -49,11 +51,13 @@ const Card = ({ prompt, setPrompt, setPrompts, messages, setMessages }) => {
       setPrompts((prevPrompts) => [saved.data, ...prevPrompts]);
     } catch (err) {
       console.error("Save failed");
+    } finally{
+      setSaving(false)
     }
   };
 
   return (
-    <div className="w-2xl flex flex-col rounded-2xl bg-slate-800/70 border border-slate-700/60 shadow-2xl shadow-black/40 backdrop-blur-sm h-[90vh]">
+    <div className="w-2xl flex flex-col rounded-2xl bg-slate-800/70 border border-slate-700/60 shadow-2xl shadow-black/40 backdrop-blur-sm h-[90vh] ml-[320px]">
 
       {/* Chat Area here*/}
       <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-4 custom-scrollbar">
@@ -66,7 +70,7 @@ const Card = ({ prompt, setPrompt, setPrompts, messages, setMessages }) => {
       {messages.map((msg, index) => (
         <div
           key={index}
-          className={`max-w-[70%] px-4 py-2 rounded-xl text-sm border ${
+          className={`max-w-[70%] text-left px-4 py-2 rounded-xl text-sm border ${
             msg.type === "user"
               ? "ml-auto bg-violet-600 text-white border-violet-500"
               : msg.type === "error"
@@ -100,16 +104,16 @@ const Card = ({ prompt, setPrompt, setPrompts, messages, setMessages }) => {
           <button
             onClick={handleSave}
             disabled={messages.length < 2}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-white bg-slate-700 disabled:opacity-40"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-white bg-slate-700 cursor-pointer disabled:opacity-40"
           >
             <Database className="w-4 h-4" />
-            Save
+            {saving?"Saving":"Save"}
           </button>
 
           <button
             onClick={handleRun}
             disabled={loading || !prompt.trim()}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-white bg-violet-600 disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-white bg-violet-600 cursor-pointer disabled:opacity-50"
           >
             {loading ? (
               <>
