@@ -36,7 +36,7 @@ const Card = () => {
     };
   return (
     <>
-          <div className="w-full max-w-2xl flex flex-col gap-5 rounded-2xl p-6 bg-slate-800/70 border border-slate-700/60 shadow-2xl shadow-black/40 backdrop-blur-sm">
+      <div className="w-xl flex flex-col gap-5 rounded-2xl p-6 bg-slate-800/70 border border-slate-700/60 shadow-2xl shadow-black/40 backdrop-blur-sm">
 
         {/* Prompt Textarea */}
         <div className="flex flex-col gap-1.5">
@@ -79,12 +79,12 @@ const Card = () => {
 
         {/* Response */}
         <div className="flex flex-col gap-1.5">
-          <label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-slate-400">
+          <label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-slate-400 justify-start">
             <MessageSquare className="w-3.5 h-3.5" />
             Response
           </label>
           <div
-            className={`w-full p-4 rounded-xl min-h-[110px] max-h-82 overflow-auto text-sm border transition-all duration-200 custom-scrollbar ${
+            className={`w-full p-4 rounded-xl min-h-[110px] max-h-82 overflow-auto text-sm border transition-all duration-200 custom-scrollbar justify-start ${
               response
                 ? "bg-slate-900/70 border-slate-700 text-slate-200"
                 : "bg-slate-900/40 border-slate-700/50 text-slate-500 italic"
